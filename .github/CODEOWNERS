@@ -1,0 +1,8 @@
+# CODEOWNERS — automatically requests review from the listed owner(s) on matching pull requests.
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# This only takes effect once "Require review from Code Owners" is turned on for the `main`
+# branch protection rule (Settings → Branches). Update the usernames below as the maintainer
+# team grows.
+
+* @knightabir

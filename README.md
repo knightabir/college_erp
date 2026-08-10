@@ -1,5 +1,9 @@
 # College ERP
 
+[![Backend CI](https://github.com/knightabir/college_erp/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/knightabir/college_erp/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/knightabir/college_erp/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/knightabir/college_erp/actions/workflows/frontend-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A multi-tenant College Enterprise Resource Planning (ERP) system built as a modular monolith —
 one Spring Boot backend, one PostgreSQL database, one React frontend — designed to run equally
 well as a single-college on-prem/air-gapped deployment or a multi-tenant SaaS platform.
@@ -115,7 +119,19 @@ Full detail lives in `07-coding-standards.md`; the essentials:
 - All associations are lazily fetched; all list endpoints are paginated.
 - Flyway migrations are sequential, one concern per file, and never edited once released.
 
+## Contributing
+
+Contributions are welcome. Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a
+pull request — it covers dev environment setup, branching/commit conventions, the module-boundary
+and coding-standards rules that are mechanically enforced, and how to run tests locally.
+
+- Found a bug or want a feature? Open an issue using the templates under **Issues → New issue**.
+- Found a security vulnerability? Do **not** open a public issue — follow
+  [`SECURITY.md`](SECURITY.md) instead.
+- All contributors are expected to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+- Every pull request runs backend and frontend CI (build, lint, tests) automatically — see
+  [`.github/workflows`](.github/workflows) — and must pass before merge.
+
 ## License
 
-No license file has been added yet — treat this repository as all-rights-reserved until one is
-added.
+Licensed under the [MIT License](LICENSE).

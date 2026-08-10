@@ -1,0 +1,96 @@
+name: Bug report
+description: Report something that's broken or behaves incorrectly
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please check open issues first to avoid
+        duplicates. **Do not use this form for security vulnerabilities** — see `SECURITY.md`.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the system is affected?
+      options:
+        - Backend — auth
+        - Backend — academic
+        - Backend — student
+        - Backend — attendance
+        - Backend — examination
+        - Backend — finance
+        - Backend — library
+        - Backend — asset
+        - Backend — hr
+        - Backend — hostel/transport
+        - Backend — communication
+        - Backend — admin
+        - Backend — admissions/placement
+        - Backend — kernel (security/notification/scheduler/storage/tenant/audit)
+        - Frontend
+        - Database / migrations
+        - CI / build tooling
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs / stack trace / screenshots
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: Commit / branch
+      description: Which commit hash or branch were you on?
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        - OS:
+        - JDK version (backend):
+        - Node version (frontend):
+        - PostgreSQL version:
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and this hasn't been reported already
+          required: true
+        - label: This is not a security vulnerability (if it is, see SECURITY.md instead)
+          required: true

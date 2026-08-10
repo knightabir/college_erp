@@ -1,0 +1,59 @@
+name: Feature request
+description: Propose a new feature, module capability, or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before requesting a feature, check `CLAUDE.md` and the planning docs (`01`–`08-*.md`) —
+        it may already be scoped as a deferred/undocumented gap rather than something new.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Backend — existing module (specify below)
+        - Backend — new module
+        - Backend — kernel
+        - Frontend
+        - Database / migrations
+        - CI / build tooling
+        - Documentation
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the gap or pain point this feature addresses.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to see happen? Reference a spec requirement code
+        (e.g. [FIN-006]) if this is filling in a documented-but-unimplemented gap.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked CLAUDE.md and the planning docs — this isn't already covered or
+            explicitly deferred with a stated reason
+          required: true
+        - label: I searched existing issues and this hasn't been requested already
+          required: true

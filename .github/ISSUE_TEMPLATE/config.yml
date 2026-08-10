@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/knightabir/college_erp/security/advisories/new
+    about: Please report security vulnerabilities privately — see SECURITY.md. Do not file a public issue.
+  - name: Ask a question / discuss
+    url: https://github.com/knightabir/college_erp/discussions
+    about: For general questions or design discussion rather than a concrete bug/feature.
