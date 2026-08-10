@@ -1,0 +1,14 @@
+package com.college.erp.module.placement.domain;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CompanyRepository extends JpaRepository<Company, UUID> {
+
+    Optional<Company> findByIdAndDeletedFalse(UUID id);
+
+    List<Company> findByDeletedFalse();
+}

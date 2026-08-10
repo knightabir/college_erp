@@ -1,0 +1,1690 @@
+{
+  "info": {
+    "name": "College ERP — Full API Collection",
+    "description": "Complete collection covering every REST endpoint in the College ERP backend (44 controllers, all modules). Run 'Login' first — it auto-captures accessToken/refreshToken/userId into collection variables. Most 'create' requests auto-capture the created resource's id into a matching collection variable (e.g. creating a Department sets {{departmentId}}), so you can usually run requests top-to-bottom within a folder without manually copying UUIDs. Requires a running instance against a real PostgreSQL database (see CLAUDE.md) — set {{baseUrl}} to match (default http://localhost:8080).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" },
+    { "key": "userId", "value": "", "type": "string" },
+    { "key": "departmentId", "value": "", "type": "string" },
+    { "key": "courseId", "value": "", "type": "string" },
+    { "key": "batchId", "value": "", "type": "string" },
+    { "key": "sectionId", "value": "", "type": "string" },
+    { "key": "academicYearId", "value": "", "type": "string" },
+    { "key": "termId", "value": "", "type": "string" },
+    { "key": "subjectId", "value": "", "type": "string" },
+    { "key": "offeringId", "value": "", "type": "string" },
+    { "key": "studentId", "value": "", "type": "string" },
+    { "key": "studentUserId", "value": "", "type": "string" },
+    { "key": "guardianId", "value": "", "type": "string" },
+    { "key": "studentDocumentId", "value": "", "type": "string" },
+    { "key": "attendanceSessionId", "value": "", "type": "string" },
+    { "key": "condonationRequestId", "value": "", "type": "string" },
+    { "key": "examId", "value": "", "type": "string" },
+    { "key": "marksEntryId", "value": "", "type": "string" },
+    { "key": "revaluationRequestId", "value": "", "type": "string" },
+    { "key": "feeStructureId", "value": "", "type": "string" },
+    { "key": "feeHeadId", "value": "", "type": "string" },
+    { "key": "accountHeadId", "value": "", "type": "string" },
+    { "key": "invoiceId", "value": "", "type": "string" },
+    { "key": "vendorId", "value": "", "type": "string" },
+    { "key": "purchaseOrderId", "value": "", "type": "string" },
+    { "key": "financialYearId", "value": "", "type": "string" },
+    { "key": "accountantGrantId", "value": "", "type": "string" },
+    { "key": "bookTitleId", "value": "", "type": "string" },
+    { "key": "bookCopyId", "value": "", "type": "string" },
+    { "key": "barcode", "value": "", "type": "string" },
+    { "key": "reservationId", "value": "", "type": "string" },
+    { "key": "fineId", "value": "", "type": "string" },
+    { "key": "assetCategoryId", "value": "", "type": "string" },
+    { "key": "assetId", "value": "", "type": "string" },
+    { "key": "assetTag", "value": "", "type": "string" },
+    { "key": "maintenanceTicketId", "value": "", "type": "string" },
+    { "key": "staffId", "value": "", "type": "string" },
+    { "key": "designationId", "value": "", "type": "string" },
+    { "key": "leaveTypeId", "value": "", "type": "string" },
+    { "key": "leaveRequestId", "value": "", "type": "string" },
+    { "key": "hostelBlockId", "value": "", "type": "string" },
+    { "key": "roomId", "value": "", "type": "string" },
+    { "key": "roomAllocationId", "value": "", "type": "string" },
+    { "key": "outpassId", "value": "", "type": "string" },
+    { "key": "routeId", "value": "", "type": "string" },
+    { "key": "vehicleId", "value": "", "type": "string" },
+    { "key": "routeMappingId", "value": "", "type": "string" },
+    { "key": "noticeId", "value": "", "type": "string" },
+    { "key": "helpdeskTicketId", "value": "", "type": "string" },
+    { "key": "adminUserId", "value": "", "type": "string" },
+    { "key": "fileId", "value": "", "type": "string" },
+    { "key": "applicationId", "value": "", "type": "string" },
+    { "key": "applicationDocumentId", "value": "", "type": "string" },
+    { "key": "meritListId", "value": "", "type": "string" },
+    { "key": "seatAllotmentId", "value": "", "type": "string" },
+    { "key": "companyId", "value": "", "type": "string" },
+    { "key": "driveId", "value": "", "type": "string" },
+    { "key": "driveApplicationId", "value": "", "type": "string" },
+    { "key": "interviewRoundId", "value": "", "type": "string" },
+    { "key": "offerId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "01. Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "login"] },
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"superadmin\",\n  \"password\": \"ChangeMe@123\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const data = pm.response.json().data;",
+                  "  pm.collectionVariables.set('accessToken', data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', data.refreshToken);",
+                  "  pm.collectionVariables.set('userId', data.userId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/refresh", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "refresh"] },
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const data = pm.response.json().data;",
+                  "  pm.collectionVariables.set('accessToken', data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', data.refreshToken);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/change-password", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "change-password"] },
+            "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"ChangeMe@123\",\n  \"newPassword\": \"NewPass@456\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/auth/logout", "host": ["{{baseUrl}}"], "path": ["api", "v1", "auth", "logout"] },
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02. Academic - Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/departments?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "List Active Departments",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/departments/active", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments", "active"] } }
+        },
+        {
+          "name": "Get Department By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments", "{{departmentId}}"] } }
+        },
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/departments", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Computer Science\",\n  \"code\": \"CSE\",\n  \"description\": \"Department of Computer Science and Engineering\",\n  \"hodUserId\": null,\n  \"contactEmail\": \"cse@college.edu\",\n  \"contactPhone\": \"9876543210\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('departmentId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Update Department",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments", "{{departmentId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Computer Science & Engineering\",\n  \"code\": \"CSE\",\n  \"description\": \"Updated description\",\n  \"hodUserId\": null,\n  \"contactEmail\": \"cse@college.edu\",\n  \"contactPhone\": \"9876543210\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Deactivate Department",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/academic/departments/{{departmentId}}/deactivate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "departments", "{{departmentId}}", "deactivate"] } }
+        }
+      ]
+    },
+    {
+      "name": "03. Academic - Courses",
+      "item": [
+        {
+          "name": "List Courses",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/courses?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "courses"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Course By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/courses/{{courseId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "courses", "{{courseId}}"] } }
+        },
+        {
+          "name": "List Courses By Department",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/courses/by-department/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "courses", "by-department", "{{departmentId}}"] } }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/courses", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "courses"] },
+            "body": { "mode": "raw", "raw": "{\n  \"departmentId\": \"{{departmentId}}\",\n  \"name\": \"B.Tech Computer Science\",\n  \"code\": \"BTCSE\",\n  \"level\": \"UG\",\n  \"durationYears\": 4,\n  \"totalCredits\": 160,\n  \"intakeCapacity\": 120,\n  \"description\": \"4-year undergraduate program\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('courseId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "04. Academic - Batches & Sections",
+      "item": [
+        {
+          "name": "Get Batch By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/batches/{{batchId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches", "{{batchId}}"] } }
+        },
+        {
+          "name": "List Batches By Course",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/batches/by-course/{{courseId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches", "by-course", "{{courseId}}"] } }
+        },
+        {
+          "name": "Create Batch",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/batches", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches"] },
+            "body": { "mode": "raw", "raw": "{\n  \"courseId\": \"{{courseId}}\",\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"label\": \"2026-2030\",\n  \"intakeYear\": 2026\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('batchId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Promote Batch To Next Term",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/academic/batches/{{batchId}}/promote-term", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches", "{{batchId}}", "promote-term"] } }
+        },
+        {
+          "name": "List Sections In Batch",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/batches/{{batchId}}/sections", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches", "{{batchId}}", "sections"] } }
+        },
+        {
+          "name": "Add Section To Batch",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/batches/{{batchId}}/sections", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "batches", "{{batchId}}", "sections"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"A\",\n  \"capacity\": 60\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('sectionId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Section By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/sections/{{sectionId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "sections", "{{sectionId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "05. Academic - Subjects",
+      "item": [
+        {
+          "name": "List Subjects",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Subject By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects/{{subjectId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects", "{{subjectId}}"] } }
+        },
+        {
+          "name": "List Subjects By Department",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects/by-department/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects", "by-department", "{{departmentId}}"] } }
+        },
+        {
+          "name": "Create Subject",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects"] },
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"CS301\",\n  \"name\": \"Data Structures\",\n  \"departmentId\": \"{{departmentId}}\",\n  \"credits\": 4,\n  \"type\": \"THEORY\",\n  \"description\": \"Core data structures course\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('subjectId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Create Subject Offering",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects/offerings", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects", "offerings"] },
+            "body": { "mode": "raw", "raw": "{\n  \"batchId\": \"{{batchId}}\",\n  \"subjectId\": \"{{subjectId}}\",\n  \"termId\": \"{{termId}}\",\n  \"maxInternalMarks\": 30,\n  \"maxExternalMarks\": 70,\n  \"passMarksInternal\": 12,\n  \"passMarksExternal\": 28,\n  \"elective\": false\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('offeringId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Subject Offerings",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/subjects/offerings?batchId={{batchId}}&termId={{termId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "subjects", "offerings"], "query": [{ "key": "batchId", "value": "{{batchId}}" }, { "key": "termId", "value": "{{termId}}" }] } }
+        }
+      ]
+    },
+    {
+      "name": "06. Academic - Timetable",
+      "item": [
+        {
+          "name": "Assign Faculty To Offering",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/timetable/assign-faculty", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "timetable", "assign-faculty"] },
+            "body": { "mode": "raw", "raw": "{\n  \"offeringId\": \"{{offeringId}}\",\n  \"sectionId\": \"{{sectionId}}\",\n  \"facultyUserId\": \"{{userId}}\",\n  \"primary\": true\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Get Timetable For Section",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/timetable/section/{{sectionId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "timetable", "section", "{{sectionId}}"] } }
+        },
+        {
+          "name": "Get Timetable For Faculty",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/timetable/faculty/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "timetable", "faculty", "{{userId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "07. Academic - Academic Years",
+      "item": [
+        {
+          "name": "List Academic Years",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/academic-years?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "academic-years"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Academic Year By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/academic-years/{{academicYearId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "academic-years", "{{academicYearId}}"] } }
+        },
+        {
+          "name": "Create Academic Year",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/academic-years", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "academic-years"] },
+            "body": { "mode": "raw", "raw": "{\n  \"label\": \"2026-2027\",\n  \"startYear\": 2026,\n  \"endYear\": 2027\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('academicYearId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Set Current Academic Year",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/academic/academic-years/{{academicYearId}}/set-current", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "academic-years", "{{academicYearId}}", "set-current"] } }
+        }
+      ]
+    },
+    {
+      "name": "08. Academic - Terms",
+      "item": [
+        {
+          "name": "Get Term By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/terms/{{termId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "terms", "{{termId}}"] } }
+        },
+        {
+          "name": "List Terms By Academic Year",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/academic/terms/by-academic-year/{{academicYearId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "terms", "by-academic-year", "{{academicYearId}}"] } }
+        },
+        {
+          "name": "Create Term",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/academic/terms", "host": ["{{baseUrl}}"], "path": ["api", "v1", "academic", "terms"] },
+            "body": { "mode": "raw", "raw": "{\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"name\": \"Semester I\",\n  \"termNumber\": 1,\n  \"startDate\": \"2026-08-01\",\n  \"endDate\": \"2026-12-15\",\n  \"examStartDate\": \"2026-12-01\",\n  \"examEndDate\": \"2026-12-15\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('termId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "09. Student - Students & Guardians",
+      "item": [
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students"] },
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": null,\n  \"enrollmentNumber\": \"2026CSE001\",\n  \"firstName\": \"Arjun\",\n  \"lastName\": \"Kumar\",\n  \"personalEmail\": \"arjun.kumar@example.com\",\n  \"phone\": \"9876543210\",\n  \"dateOfBirth\": \"2008-05-15\",\n  \"gender\": \"MALE\",\n  \"bloodGroup\": \"O+\",\n  \"aadharNumber\": \"123456789012\",\n  \"category\": \"GENERAL\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Bengaluru\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560001\",\n  \"batchId\": \"{{batchId}}\",\n  \"sectionId\": \"{{sectionId}}\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('studentId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Own Profile (STUDENT role)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/me", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "me"] } }
+        },
+        {
+          "name": "Get Student By Enrollment Number",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/enrollment/2026CSE001", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "enrollment", "2026CSE001"] } }
+        },
+        {
+          "name": "List Students By Section",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/by-section/{{sectionId}}?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "by-section", "{{sectionId}}"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "List Students By Batch",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/by-batch/{{batchId}}?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "by-batch", "{{batchId}}"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Student By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}"] } }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Arjun\",\n  \"lastName\": \"Kumar\",\n  \"phone\": \"9876543211\",\n  \"bloodGroup\": \"O+\",\n  \"address\": \"456 New St\",\n  \"city\": \"Bengaluru\",\n  \"state\": \"Karnataka\",\n  \"pincode\": \"560002\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Graduate Student",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/graduate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "graduate"] } }
+        },
+        {
+          "name": "List Guardians",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/guardians", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "guardians"] } }
+        },
+        {
+          "name": "Add Guardian",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/guardians", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "guardians"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Ramesh Kumar\",\n  \"relationship\": \"FATHER\",\n  \"phone\": \"9876543212\",\n  \"email\": \"ramesh.kumar@example.com\",\n  \"occupation\": \"Engineer\",\n  \"annualIncome\": 1200000,\n  \"primary\": true\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('guardianId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "10. Student - Enrollment",
+      "item": [
+        {
+          "name": "Get Current Enrollment",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/enrollment", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "enrollment"] } }
+        },
+        {
+          "name": "Get Enrollment History",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/enrollment/history", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "enrollment", "history"] } }
+        },
+        {
+          "name": "Transfer Section",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/transfer-section", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "transfer-section"] },
+            "body": { "mode": "raw", "raw": "{\n  \"newSectionId\": \"{{sectionId}}\",\n  \"remarks\": \"Requested transfer\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Student - Documents",
+      "item": [
+        {
+          "name": "List Student Documents",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "documents"] } }
+        },
+        {
+          "name": "Add Student Document",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students/{{studentId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "{{studentId}}", "documents"] },
+            "body": { "mode": "raw", "raw": "{\n  \"documentType\": \"AADHAR_CARD\",\n  \"fileId\": \"{{fileId}}\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('studentDocumentId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Verify Document",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/students/documents/{{studentDocumentId}}/verify", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "documents", "{{studentDocumentId}}", "verify"] } }
+        },
+        {
+          "name": "Reject Document",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/students/documents/{{studentDocumentId}}/reject", "host": ["{{baseUrl}}"], "path": ["api", "v1", "students", "documents", "{{studentDocumentId}}", "reject"] },
+            "body": { "mode": "raw", "raw": "{\n  \"remarks\": \"Document illegible, please re-upload\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Attendance",
+      "item": [
+        {
+          "name": "Open Attendance Session",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/attendance/sessions", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "sessions"] },
+            "body": { "mode": "raw", "raw": "{\n  \"offeringId\": \"{{offeringId}}\",\n  \"sectionId\": \"{{sectionId}}\",\n  \"sessionDate\": \"2026-08-10\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('attendanceSessionId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Mark Attendance",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/attendance/sessions/{{attendanceSessionId}}/mark", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "sessions", "{{attendanceSessionId}}", "mark"] },
+            "body": { "mode": "raw", "raw": "{\n  \"{{studentId}}\": \"PRESENT\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Submit Attendance Session",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/attendance/sessions/{{attendanceSessionId}}/submit", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "sessions", "{{attendanceSessionId}}", "submit"] } }
+        },
+        {
+          "name": "Get Attendance Summary",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/attendance/summary/student/{{studentId}}/offering/{{offeringId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "summary", "student", "{{studentId}}", "offering", "{{offeringId}}"] } }
+        },
+        {
+          "name": "Get Defaulters",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/attendance/defaulters/{{offeringId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "defaulters", "{{offeringId}}"] } }
+        },
+        {
+          "name": "Apply Condonation (STUDENT role)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/attendance/condonation", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "condonation"] },
+            "body": { "mode": "raw", "raw": "{\n  \"offeringId\": \"{{offeringId}}\",\n  \"termId\": \"{{termId}}\",\n  \"reason\": \"Medical emergency — hospitalized for a week\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('condonationRequestId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Review Condonation",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/attendance/condonation/{{condonationRequestId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "attendance", "condonation", "{{condonationRequestId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"decision\": \"APPROVED\",\n  \"remarks\": \"Medical certificate verified\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "13. Examination - Exams",
+      "item": [
+        {
+          "name": "Schedule Exam",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/exams", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"End Term Examination\",\n  \"examType\": \"END_TERM\",\n  \"batchId\": \"{{batchId}}\",\n  \"termId\": \"{{termId}}\",\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-15\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('examId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Exam By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/{{examId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "{{examId}}"] } }
+        },
+        {
+          "name": "List Exams By Batch",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/by-batch/{{batchId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "by-batch", "{{batchId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "14. Examination - Hall Tickets",
+      "item": [
+        {
+          "name": "Generate Hall Tickets",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/exams/{{examId}}/hall-tickets/generate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "{{examId}}", "hall-tickets", "generate"] } }
+        },
+        {
+          "name": "Get Hall Ticket For Student",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/{{examId}}/hall-tickets/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "{{examId}}", "hall-tickets", "{{studentId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "15. Examination - Marks & Revaluation",
+      "item": [
+        {
+          "name": "Enter Marks",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/exams/marks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "marks"] },
+            "body": { "mode": "raw", "raw": "{\n  \"examId\": \"{{examId}}\",\n  \"offeringId\": \"{{offeringId}}\",\n  \"studentId\": \"{{studentId}}\",\n  \"internalMarks\": 25,\n  \"externalMarks\": 60\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('marksEntryId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Submit Marks Entry",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/exams/marks/{{marksEntryId}}/submit", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "marks", "{{marksEntryId}}", "submit"] } }
+        },
+        {
+          "name": "Moderate Exam Marks",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/exams/marks/{{examId}}/moderate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "marks", "{{examId}}", "moderate"] } }
+        },
+        {
+          "name": "Apply Revaluation (STUDENT role)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/exams/revaluation", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "revaluation"] },
+            "body": { "mode": "raw", "raw": "{\n  \"marksEntryId\": \"{{marksEntryId}}\",\n  \"reason\": \"Believe external marks were mis-totaled\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('revaluationRequestId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Complete Revaluation",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/exams/revaluation/{{revaluationRequestId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "revaluation", "{{revaluationRequestId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"approved\": true,\n  \"reviewedMarks\": 65\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "List Revaluations For Student",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/revaluation/student/{{studentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "revaluation", "student", "{{studentId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "16. Examination - Results",
+      "item": [
+        {
+          "name": "Publish Results",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/exams/{{examId}}/results/publish", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "{{examId}}", "results", "publish"] } }
+        },
+        {
+          "name": "Get Result",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/results/student/{{studentId}}/term/{{termId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "results", "student", "{{studentId}}", "term", "{{termId}}"] } }
+        },
+        {
+          "name": "Get Grade Card",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/exams/grade-card/student/{{studentId}}/term/{{termId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "exams", "grade-card", "student", "{{studentId}}", "term", "{{termId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "17. Finance - Fee Structures",
+      "item": [
+        {
+          "name": "List Fee Structures By Course",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/fee-structures/course/{{courseId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fee-structures", "course", "{{courseId}}"] } }
+        },
+        {
+          "name": "Create Fee Structure",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/fee-structures", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fee-structures"] },
+            "body": { "mode": "raw", "raw": "{\n  \"courseId\": \"{{courseId}}\",\n  \"batchId\": null,\n  \"feeHeadId\": \"{{feeHeadId}}\",\n  \"termNumber\": 1,\n  \"amount\": 50000,\n  \"dueDateOffsetDays\": 30,\n  \"lateFeePerDay\": 50\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('feeStructureId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "18. Finance - Fee Collection",
+      "item": [
+        {
+          "name": "Generate Invoice",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/fees/invoices/generate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fees", "invoices", "generate"] },
+            "body": { "mode": "raw", "raw": "{\n  \"studentId\": \"{{studentId}}\",\n  \"courseId\": \"{{courseId}}\",\n  \"batchId\": \"{{batchId}}\",\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"termNumber\": 1\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('invoiceId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Student Invoices",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/fees/students/{{studentId}}/invoices", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fees", "students", "{{studentId}}", "invoices"] } }
+        },
+        {
+          "name": "Get Outstanding Invoices",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/fees/students/{{studentId}}/outstanding", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fees", "students", "{{studentId}}", "outstanding"] } }
+        },
+        {
+          "name": "Collect Payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Idempotency-Key", "value": "{{$guid}}" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/fees/invoices/{{invoiceId}}/collect", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fees", "invoices", "{{invoiceId}}", "collect"] },
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 25000,\n  \"paymentMode\": \"CASH\",\n  \"transactionReference\": null\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Get Payments For Invoice",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/fees/invoices/{{invoiceId}}/payments", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fees", "invoices", "{{invoiceId}}", "payments"] } }
+        }
+      ]
+    },
+    {
+      "name": "19. Finance - Ledger",
+      "item": [
+        {
+          "name": "Browse Ledger",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/ledger?from=2026-01-01&to=2026-12-31&page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "ledger"], "query": [{ "key": "from", "value": "2026-01-01" }, { "key": "to", "value": "2026-12-31" }, { "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Post Manual Ledger Entry",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Idempotency-Key", "value": "{{$guid}}" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/ledger/manual-entry", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "ledger", "manual-entry"] },
+            "body": { "mode": "raw", "raw": "{\n  \"accountHeadId\": \"{{accountHeadId}}\",\n  \"entryType\": \"DEBIT\",\n  \"amount\": 5000,\n  \"description\": \"Correction entry\",\n  \"referenceType\": \"MANUAL\",\n  \"referenceId\": null\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "20. Finance - Financial Year",
+      "item": [
+        {
+          "name": "Get Current Financial Year",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/financial-years/current", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "financial-years", "current"] } }
+        },
+        {
+          "name": "Create Financial Year",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/financial-years", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "financial-years"] },
+            "body": { "mode": "raw", "raw": "{\n  \"label\": \"2026-2027\",\n  \"startDate\": \"2026-04-01\",\n  \"endDate\": \"2027-03-31\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('financialYearId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Close Financial Year (dual approval — call twice as 2 different users)",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/finance/financial-years/{{financialYearId}}/close", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "financial-years", "{{financialYearId}}", "close"] } }
+        }
+      ]
+    },
+    {
+      "name": "21. Finance - Accountant Grants",
+      "item": [
+        {
+          "name": "Grant Accountant Permission",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/accountant-grants", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "accountant-grants"] },
+            "body": { "mode": "raw", "raw": "{\n  \"granteeUserId\": \"{{userId}}\",\n  \"permissionKey\": \"FINANCE.FEE_COLLECT\",\n  \"scopeDepartmentId\": \"{{departmentId}}\",\n  \"scopeBatchId\": null,\n  \"scopeFeeHeadCode\": null,\n  \"amountThreshold\": 100000,\n  \"effectiveFrom\": \"2026-08-01T00:00:00Z\",\n  \"effectiveUntil\": \"2027-03-31T23:59:59Z\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('accountantGrantId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List My Grants",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/accountant-grants/my-grants", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "accountant-grants", "my-grants"] } }
+        },
+        {
+          "name": "Revoke Grant",
+          "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/v1/finance/accountant-grants/{{accountantGrantId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "accountant-grants", "{{accountantGrantId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "22. Finance - Procurement",
+      "item": [
+        {
+          "name": "Create Vendor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/procurement/vendors", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "procurement", "vendors"] },
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"VEND001\",\n  \"name\": \"ABC Suppliers\",\n  \"contactPerson\": \"Suresh Rao\",\n  \"email\": \"contact@abcsuppliers.com\",\n  \"phone\": \"9876500000\",\n  \"address\": \"Industrial Area, Bengaluru\",\n  \"gstNumber\": \"29ABCDE1234F1Z5\",\n  \"panNumber\": \"ABCDE1234F\",\n  \"bankAccountNumber\": \"123456789012\",\n  \"ifscCode\": \"HDFC0001234\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('vendorId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Vendors",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/procurement/vendors", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "procurement", "vendors"] } }
+        },
+        {
+          "name": "Create Purchase Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/procurement/purchase-orders", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "procurement", "purchase-orders"] },
+            "body": { "mode": "raw", "raw": "{\n  \"vendorId\": \"{{vendorId}}\",\n  \"departmentId\": \"{{departmentId}}\",\n  \"totalAmount\": 150000,\n  \"description\": \"Lab equipment purchase\",\n  \"poDate\": \"2026-08-10\",\n  \"expectedDeliveryDate\": \"2026-09-10\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('purchaseOrderId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Approve Purchase Order",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/finance/procurement/purchase-orders/{{purchaseOrderId}}/approve", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "procurement", "purchase-orders", "{{purchaseOrderId}}", "approve"] } }
+        },
+        {
+          "name": "List Purchase Orders By Vendor",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/procurement/vendors/{{vendorId}}/purchase-orders", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "procurement", "vendors", "{{vendorId}}", "purchase-orders"] } }
+        }
+      ]
+    },
+    {
+      "name": "23. Finance - Account Heads",
+      "item": [
+        {
+          "name": "List Account Heads",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/account-heads", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "account-heads"] } }
+        },
+        {
+          "name": "Create Account Head",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/account-heads", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "account-heads"] },
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"TUITION_INCOME\",\n  \"name\": \"Tuition Fee Income\",\n  \"description\": \"Income from tuition fees\",\n  \"type\": \"INCOME\",\n  \"parentId\": null\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('accountHeadId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "24. Finance - Fee Heads",
+      "item": [
+        {
+          "name": "List Fee Heads",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/finance/fee-heads", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fee-heads"] } }
+        },
+        {
+          "name": "Create Fee Head",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/finance/fee-heads", "host": ["{{baseUrl}}"], "path": ["api", "v1", "finance", "fee-heads"] },
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"TUITION\",\n  \"name\": \"Tuition Fee\",\n  \"description\": \"Per-term tuition fee\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('feeHeadId', pm.response.json().data.id); }"] } }]
+        }
+      ]
+    },
+    {
+      "name": "25. Library - Catalog",
+      "item": [
+        {
+          "name": "Search Titles",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/titles?q=clean&page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "titles"], "query": [{ "key": "q", "value": "clean" }, { "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Title By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/titles/{{bookTitleId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "titles", "{{bookTitleId}}"] } }
+        },
+        {
+          "name": "Create Book Title",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/titles", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "titles"] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Clean Code\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"9780132350884\",\n  \"edition\": \"1st\",\n  \"publisher\": \"Prentice Hall\",\n  \"publicationYear\": 2008,\n  \"subjectClassification\": \"Software Engineering\",\n  \"language\": \"English\",\n  \"description\": \"A handbook of agile software craftsmanship\",\n  \"departmentId\": \"{{departmentId}}\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('bookTitleId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Add Book Copy",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/titles/{{bookTitleId}}/copies", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "titles", "{{bookTitleId}}", "copies"] },
+            "body": { "mode": "raw", "raw": "{\n  \"shelfLocation\": \"A-12\",\n  \"rackNumber\": \"3\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { const d = pm.response.json().data; pm.collectionVariables.set('bookCopyId', d.id); pm.collectionVariables.set('barcode', d.barcode); }"] } }]
+        },
+        {
+          "name": "List Copies For Title",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/titles/{{bookTitleId}}/copies", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "titles", "{{bookTitleId}}", "copies"] } }
+        },
+        {
+          "name": "Get Copy By Barcode",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/copies/barcode/{{barcode}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "copies", "barcode", "{{barcode}}"] } }
+        },
+        {
+          "name": "Get Copy Barcode Image (PNG)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/copies/{{bookCopyId}}/barcode-image", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "copies", "{{bookCopyId}}", "barcode-image"] } }
+        },
+        {
+          "name": "Mark Copy Lost",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/library/catalog/copies/{{bookCopyId}}/mark-lost", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "catalog", "copies", "{{bookCopyId}}", "mark-lost"] } }
+        }
+      ]
+    },
+    {
+      "name": "26. Library - Circulation",
+      "item": [
+        {
+          "name": "Issue Book",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/circulation/issue", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "circulation", "issue"] },
+            "body": { "mode": "raw", "raw": "{\n  \"barcode\": \"{{barcode}}\",\n  \"borrowerUserId\": \"{{studentUserId}}\",\n  \"borrowerName\": \"Arjun Kumar\",\n  \"borrowerType\": \"STUDENT\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Return Book",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/circulation/return", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "circulation", "return"] },
+            "body": { "mode": "raw", "raw": "{\n  \"barcode\": \"{{barcode}}\",\n  \"conditionOnReturn\": \"GOOD\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Renew Book",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/circulation/renew", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "circulation", "renew"] },
+            "body": { "mode": "raw", "raw": "{\n  \"barcode\": \"{{barcode}}\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Get Custody Chain",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/circulation/copies/{{bookCopyId}}/custody-chain", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "circulation", "copies", "{{bookCopyId}}", "custody-chain"] } }
+        }
+      ]
+    },
+    {
+      "name": "27. Library - Reservations",
+      "item": [
+        {
+          "name": "Join Reservation Queue",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/library/reservations/titles/{{bookTitleId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "reservations", "titles", "{{bookTitleId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('reservationId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Cancel Reservation",
+          "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/v1/library/reservations/{{reservationId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "reservations", "{{reservationId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "28. Library - Fines",
+      "item": [
+        {
+          "name": "List Fines By User",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/library/fines/user/{{studentUserId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "fines", "user", "{{studentUserId}}"] } }
+        },
+        {
+          "name": "Pay Fine",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/fines/{{fineId}}/pay", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "fines", "{{fineId}}", "pay"] },
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 20.00\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Waive Fine",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/library/fines/{{fineId}}/waive", "host": ["{{baseUrl}}"], "path": ["api", "v1", "library", "fines", "{{fineId}}", "waive"] },
+            "body": { "mode": "raw", "raw": "{\n  \"reason\": \"First-time offender, waived as goodwill\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "29. Asset - Assets",
+      "item": [
+        {
+          "name": "Create Asset Category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets/categories", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "categories"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Computers\",\n  \"depreciationRatePct\": 15\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('assetCategoryId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Asset Categories",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/categories", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "categories"] } }
+        },
+        {
+          "name": "Register Asset",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Dell OptiPlex 7090\",\n  \"description\": \"Desktop computer for faculty use\",\n  \"categoryId\": \"{{assetCategoryId}}\",\n  \"departmentId\": \"{{departmentId}}\",\n  \"roomLocation\": \"Lab 3, Room 201\",\n  \"purchaseDate\": \"2026-01-15\",\n  \"purchaseCost\": 65000.00,\n  \"vendorId\": \"{{vendorId}}\",\n  \"warrantyExpiry\": \"2029-01-14\",\n  \"assignedToUserId\": null\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { const d = pm.response.json().data; pm.collectionVariables.set('assetId', d.id); pm.collectionVariables.set('assetTag', d.assetTag); }"] } }]
+        },
+        {
+          "name": "Get Asset By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}"] } }
+        },
+        {
+          "name": "Get Asset By Tag",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/tag/{{assetTag}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "tag", "{{assetTag}}"] } }
+        },
+        {
+          "name": "List Assets By Department",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/by-department/{{departmentId}}?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "by-department", "{{departmentId}}"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Asset Barcode Image (PNG)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/barcode-image", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "barcode-image"] } }
+        },
+        {
+          "name": "Transfer Asset",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/transfer", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "transfer"] },
+            "body": { "mode": "raw", "raw": "{\n  \"toDepartmentId\": \"{{departmentId}}\",\n  \"toUserId\": null,\n  \"toLocation\": \"Room 305, Block B\",\n  \"reason\": \"New faculty assignment requires this equipment\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Get Custody Chain",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/custody-chain", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "custody-chain"] } }
+        },
+        {
+          "name": "Dispose Asset",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/dispose", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "dispose"] },
+            "body": { "mode": "raw", "raw": "{\n  \"reason\": \"Beyond economical repair — 8 years old, motherboard failed\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "30. Asset - Maintenance",
+      "item": [
+        {
+          "name": "Raise Maintenance Ticket",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/maintenance-tickets", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "maintenance-tickets"] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Projector not displaying correctly\",\n  \"description\": \"Image is distorted on the left side\",\n  \"priority\": \"HIGH\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('maintenanceTicketId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Maintenance Tickets For Asset",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/maintenance-tickets", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "maintenance-tickets"] } }
+        },
+        {
+          "name": "Resolve Maintenance Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/assets/tickets/{{maintenanceTicketId}}/resolve", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "tickets", "{{maintenanceTicketId}}", "resolve"] },
+            "body": { "mode": "raw", "raw": "{\n  \"resolution\": \"Replaced the HDMI cable. Working correctly now.\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "31. Asset - Depreciation",
+      "item": [
+        {
+          "name": "Calculate Depreciation",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/assets/{{assetId}}/depreciation", "host": ["{{baseUrl}}"], "path": ["api", "v1", "assets", "{{assetId}}", "depreciation"] } }
+        }
+      ]
+    },
+    {
+      "name": "32. Notifications",
+      "item": [
+        {
+          "name": "SSE Stream (open in browser, not Postman test runner)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/notifications/stream", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notifications", "stream"] } }
+        },
+        {
+          "name": "Get Inbox",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/notifications?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notifications"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Unread Count",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/notifications/unread-count", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notifications", "unread-count"] } }
+        },
+        {
+          "name": "Mark All Read",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/notifications/mark-all-read", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notifications", "mark-all-read"] } }
+        }
+      ]
+    },
+    {
+      "name": "33. HR - Staff",
+      "item": [
+        {
+          "name": "Create Designation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/staff/designations", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "staff", "designations"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Assistant Professor\",\n  \"grade\": \"L1\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('designationId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Designations",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/staff/designations", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "staff", "designations"] } }
+        },
+        {
+          "name": "Create Staff Profile",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/staff", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "staff"] },
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"employeeNumber\": \"EMP-0001\",\n  \"departmentId\": \"{{departmentId}}\",\n  \"designationId\": \"{{designationId}}\",\n  \"staffType\": \"TEACHING\",\n  \"joiningDate\": \"2020-06-01\",\n  \"qualification\": \"Ph.D. Computer Science\",\n  \"specialization\": \"Machine Learning\",\n  \"experienceYears\": 6,\n  \"bankAccountNumber\": \"987654321098\",\n  \"ifscCode\": \"HDFC0005678\",\n  \"panNumber\": \"BNZPK1234C\",\n  \"pfNumber\": \"PF123456\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('staffId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Staff By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/staff/{{staffId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "staff", "{{staffId}}"] } }
+        },
+        {
+          "name": "List Staff By Department",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/staff/by-department/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "staff", "by-department", "{{departmentId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "34. HR - Leave",
+      "item": [
+        {
+          "name": "Create Leave Type",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/types", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "types"] },
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"CL\",\n  \"name\": \"Casual Leave\",\n  \"daysPerYear\": 12,\n  \"paid\": true\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('leaveTypeId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Leave Types",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/types", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "types"] } }
+        },
+        {
+          "name": "Initialize Leave Balances For Year",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/balances/initialize?year=2026", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "balances", "initialize"], "query": [{ "key": "year", "value": "2026" }] } }
+        },
+        {
+          "name": "Get My Leave Balances",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/balances?year=2026", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "balances"], "query": [{ "key": "year", "value": "2026" }] } }
+        },
+        {
+          "name": "Apply For Leave",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/apply", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "apply"] },
+            "body": { "mode": "raw", "raw": "{\n  \"leaveTypeId\": \"{{leaveTypeId}}\",\n  \"fromDate\": \"2026-09-01\",\n  \"toDate\": \"2026-09-03\",\n  \"reason\": \"Family function\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('leaveRequestId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "My Leave Requests",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/my-requests", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "my-requests"] } }
+        },
+        {
+          "name": "Pending Leave Requests",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/pending", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "pending"] } }
+        },
+        {
+          "name": "Approve Leave Request",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/{{leaveRequestId}}/approve", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "{{leaveRequestId}}", "approve"] },
+            "body": { "mode": "raw", "raw": "{\n  \"remarks\": \"Approved — arrange for a substitute\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Reject Leave Request",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/{{leaveRequestId}}/reject", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "{{leaveRequestId}}", "reject"] },
+            "body": { "mode": "raw", "raw": "{\n  \"remarks\": \"Exam duty scheduled on these dates\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Cancel Leave Request",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/hr/leave/{{leaveRequestId}}/cancel", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hr", "leave", "{{leaveRequestId}}", "cancel"] } }
+        }
+      ]
+    },
+    {
+      "name": "35. Hostel",
+      "item": [
+        {
+          "name": "Create Hostel Block",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hostel/blocks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "blocks"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Block A\",\n  \"gender\": \"MALE\",\n  \"wardenId\": null,\n  \"capacity\": 200\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('hostelBlockId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Hostel Blocks",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hostel/blocks", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "blocks"] } }
+        },
+        {
+          "name": "Create Room",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hostel/blocks/{{hostelBlockId}}/rooms", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "blocks", "{{hostelBlockId}}", "rooms"] },
+            "body": { "mode": "raw", "raw": "{\n  \"roomNumber\": \"101\",\n  \"floor\": 1,\n  \"capacity\": 2,\n  \"roomType\": \"DOUBLE\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('roomId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Rooms In Block",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hostel/blocks/{{hostelBlockId}}/rooms", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "blocks", "{{hostelBlockId}}", "rooms"] } }
+        },
+        {
+          "name": "Allocate Room",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hostel/allocations", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "allocations"] },
+            "body": { "mode": "raw", "raw": "{\n  \"roomId\": \"{{roomId}}\",\n  \"studentId\": \"{{studentId}}\",\n  \"fromDate\": \"2026-08-01\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('roomAllocationId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Vacate Room Allocation",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/hostel/allocations/{{roomAllocationId}}/vacate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "allocations", "{{roomAllocationId}}", "vacate"] } }
+        },
+        {
+          "name": "List Active Allocations For Room",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hostel/rooms/{{roomId}}/allocations", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "rooms", "{{roomId}}", "allocations"] } }
+        }
+      ]
+    },
+    {
+      "name": "36. Hostel - Outpass",
+      "item": [
+        {
+          "name": "Apply For Outpass (STUDENT role)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass"] },
+            "body": { "mode": "raw", "raw": "{\n  \"fromDatetime\": \"2026-08-15T09:00:00Z\",\n  \"toDatetime\": \"2026-08-15T20:00:00Z\",\n  \"reason\": \"Visiting family\",\n  \"destination\": \"Home\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('outpassId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "My Outpass Requests (STUDENT role)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass/my-requests", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass", "my-requests"] } }
+        },
+        {
+          "name": "Pending Outpass Requests",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass/pending", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass", "pending"] } }
+        },
+        {
+          "name": "Approve Outpass",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass/{{outpassId}}/approve", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass", "{{outpassId}}", "approve"] } }
+        },
+        {
+          "name": "Reject Outpass",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass/{{outpassId}}/reject", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass", "{{outpassId}}", "reject"] } }
+        },
+        {
+          "name": "Cancel Outpass (STUDENT role)",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/hostel/outpass/{{outpassId}}/cancel", "host": ["{{baseUrl}}"], "path": ["api", "v1", "hostel", "outpass", "{{outpassId}}", "cancel"] } }
+        }
+      ]
+    },
+    {
+      "name": "37. Transport",
+      "item": [
+        {
+          "name": "Create Route",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/transport/routes", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "routes"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Route 1 — City Center\",\n  \"description\": \"Covers MG Road, Indiranagar, Koramangala\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('routeId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Active Routes",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/transport/routes", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "routes"] } }
+        },
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/transport/vehicles", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "vehicles"] },
+            "body": { "mode": "raw", "raw": "{\n  \"registrationNo\": \"KA01AB1234\",\n  \"vehicleType\": \"Bus\",\n  \"capacity\": 40,\n  \"driverName\": \"Suresh Kumar\",\n  \"driverPhone\": \"9876543213\",\n  \"driverLicense\": \"KA0120210012345\",\n  \"licenseExpiry\": \"2028-06-30\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('vehicleId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Active Vehicles",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/transport/vehicles", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "vehicles"] } }
+        },
+        {
+          "name": "Assign Student To Route",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/transport/route-mappings", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "route-mappings"] },
+            "body": { "mode": "raw", "raw": "{\n  \"studentId\": \"{{studentId}}\",\n  \"routeId\": \"{{routeId}}\",\n  \"vehicleId\": \"{{vehicleId}}\",\n  \"stopName\": \"MG Road Stop\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('routeMappingId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Deactivate Route Mapping",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/transport/route-mappings/{{routeMappingId}}/deactivate", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "route-mappings", "{{routeMappingId}}", "deactivate"] } }
+        },
+        {
+          "name": "List Students On Route",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/transport/routes/{{routeId}}/students", "host": ["{{baseUrl}}"], "path": ["api", "v1", "transport", "routes", "{{routeId}}", "students"] } }
+        }
+      ]
+    },
+    {
+      "name": "38. Communication - Notices",
+      "item": [
+        {
+          "name": "Create Notice",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/notices", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notices"] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"End-Term Examination Schedule\",\n  \"body\": \"The end-term exams for Semester V will be held from Nov 1-15, 2026.\",\n  \"targetType\": \"ALL\",\n  \"targetId\": null,\n  \"pinned\": false,\n  \"expiresAt\": \"2026-11-16T00:00:00Z\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('noticeId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Relevant Notices",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/notices?departmentId={{departmentId}}&batchId={{batchId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "notices"], "query": [{ "key": "departmentId", "value": "{{departmentId}}" }, { "key": "batchId", "value": "{{batchId}}" }] } }
+        }
+      ]
+    },
+    {
+      "name": "39. Communication - Helpdesk",
+      "item": [
+        {
+          "name": "Raise Ticket",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/helpdesk", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk"] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Fee payment not reflecting\",\n  \"description\": \"I paid Rs 25,000 via UPI on June 1st but the portal still shows outstanding\",\n  \"category\": \"FINANCIAL\",\n  \"priority\": \"HIGH\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('helpdeskTicketId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "My Tickets",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/my-tickets?status=OPEN&page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "my-tickets"], "query": [{ "key": "status", "value": "OPEN" }, { "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get Ticket By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}"] } }
+        },
+        {
+          "name": "Assign Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/assign", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "assign"] },
+            "body": { "mode": "raw", "raw": "{\n  \"assigneeUserId\": \"{{userId}}\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Start Progress",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/start-progress", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "start-progress"] } }
+        },
+        {
+          "name": "Resolve Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/resolve", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "resolve"] },
+            "body": { "mode": "raw", "raw": "{\n  \"resolution\": \"Payment reconciled manually, invoice updated\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Close Ticket",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/close", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "close"] } }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "comments"] },
+            "body": { "mode": "raw", "raw": "{\n  \"comment\": \"Any update on this?\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "List Comments",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/helpdesk/{{helpdeskTicketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "v1", "helpdesk", "{{helpdeskTicketId}}", "comments"] } }
+        }
+      ]
+    },
+    {
+      "name": "40. Admin - User Management",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admin/users", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users"] },
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"jdoe\",\n  \"email\": \"jdoe@college.edu\",\n  \"fullName\": \"John Doe\",\n  \"password\": \"TempPass@123\",\n  \"phone\": \"9876543214\",\n  \"role\": \"FACULTY\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('adminUserId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Users",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admin/users?page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Get User By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admin/users/{{adminUserId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users", "{{adminUserId}}"] } }
+        },
+        {
+          "name": "Lock User",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admin/users/{{adminUserId}}/lock", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users", "{{adminUserId}}", "lock"] } }
+        },
+        {
+          "name": "Unlock User",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admin/users/{{adminUserId}}/unlock", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users", "{{adminUserId}}", "unlock"] } }
+        },
+        {
+          "name": "Assign Role",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admin/users/{{adminUserId}}/roles", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "users", "{{adminUserId}}", "roles"] },
+            "body": { "mode": "raw", "raw": "{\n  \"role\": \"HOD\",\n  \"departmentId\": \"{{departmentId}}\",\n  \"expiresAt\": null\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "41. Admin - Audit Log",
+      "item": [
+        {
+          "name": "Search Audit Log",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admin/audit-log?userId={{userId}}&entityType=Student&action=CREATE&from=2026-01-01T00:00:00Z&to=2026-12-31T23:59:59Z&page=0&size=50", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admin", "audit-log"], "query": [{ "key": "userId", "value": "{{userId}}" }, { "key": "entityType", "value": "Student" }, { "key": "action", "value": "CREATE" }, { "key": "from", "value": "2026-01-01T00:00:00Z" }, { "key": "to", "value": "2026-12-31T23:59:59Z" }, { "key": "page", "value": "0" }, { "key": "size", "value": "50" }] } }
+        }
+      ]
+    },
+    {
+      "name": "42. Files",
+      "item": [
+        {
+          "name": "Retrieve File",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/files/{{fileId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "files", "{{fileId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "43. Admissions - Applications",
+      "item": [
+        {
+          "name": "Apply (Submit Application)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications"] },
+            "body": { "mode": "raw", "raw": "{\n  \"applicantName\": \"Priya Sharma\",\n  \"applicantEmail\": \"priya.sharma@example.com\",\n  \"applicantPhone\": \"9876543215\",\n  \"dateOfBirth\": \"2008-03-20\",\n  \"gender\": \"FEMALE\",\n  \"courseId\": \"{{courseId}}\",\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"category\": \"GENERAL\",\n  \"qualifyingExamScore\": 92.5,\n  \"qualifyingExamDetails\": \"CBSE Class XII, 92.5%\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('applicationId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Get Application By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}"] } }
+        },
+        {
+          "name": "List Applications By Course & Year",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications?courseId={{courseId}}&academicYearId={{academicYearId}}&page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications"], "query": [{ "key": "courseId", "value": "{{courseId}}" }, { "key": "academicYearId", "value": "{{academicYearId}}" }, { "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "List Applications By Status",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/by-status?status=SUBMITTED&page=0&size=20", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "by-status"], "query": [{ "key": "status", "value": "SUBMITTED" }, { "key": "page", "value": "0" }, { "key": "size", "value": "20" }] } }
+        },
+        {
+          "name": "Review Application",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/review", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "review"] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"SHORTLISTED\",\n  \"remarks\": \"Strong qualifying score\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Get Application History",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/history", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "history"] } }
+        },
+        {
+          "name": "Upload Application Document",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "documents"] },
+            "body": { "mode": "raw", "raw": "{\n  \"documentType\": \"MARKSHEET_12\",\n  \"fileId\": \"{{fileId}}\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('applicationDocumentId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Application Documents",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "documents"] } }
+        },
+        {
+          "name": "Verify Application Document",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/documents/{{applicationDocumentId}}/verify?approve=true", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "documents", "{{applicationDocumentId}}", "verify"], "query": [{ "key": "approve", "value": "true" }] } }
+        },
+        {
+          "name": "Record Lateral Entry Details",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/lateral-entry", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "lateral-entry"] },
+            "body": { "mode": "raw", "raw": "{\n  \"diplomaInstitution\": \"Government Polytechnic\",\n  \"diplomaScore\": 85.0,\n  \"entryYearNumber\": 2\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Convert To Student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/applications/{{applicationId}}/convert-to-student", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "applications", "{{applicationId}}", "convert-to-student"] },
+            "body": { "mode": "raw", "raw": "{\n  \"enrollmentNumber\": \"2026CSE099\",\n  \"sectionId\": \"{{sectionId}}\",\n  \"userId\": null\n}", "options": { "raw": { "language": "json" } } }
+          }
+        }
+      ]
+    },
+    {
+      "name": "44. Admissions - Merit Lists",
+      "item": [
+        {
+          "name": "Generate Merit List",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists"] },
+            "body": { "mode": "raw", "raw": "{\n  \"courseId\": \"{{courseId}}\",\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"name\": \"CSE Merit List Round 1\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('meritListId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Publish Merit List",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists/{{meritListId}}/publish", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists", "{{meritListId}}", "publish"] } }
+        },
+        {
+          "name": "Get Merit List Entries",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists/{{meritListId}}/entries", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists", "{{meritListId}}", "entries"] } }
+        },
+        {
+          "name": "Offer Seat",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists/applications/{{applicationId}}/offer-seat", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists", "applications", "{{applicationId}}", "offer-seat"] },
+            "body": { "mode": "raw", "raw": "{\n  \"batchId\": \"{{batchId}}\",\n  \"responseDeadline\": \"2026-08-20T23:59:59Z\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('seatAllotmentId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Accept Seat Offer",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists/seat-allotments/{{seatAllotmentId}}/accept", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists", "seat-allotments", "{{seatAllotmentId}}", "accept"] } }
+        },
+        {
+          "name": "Decline Seat Offer",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/admissions/merit-lists/seat-allotments/{{seatAllotmentId}}/decline", "host": ["{{baseUrl}}"], "path": ["api", "v1", "admissions", "merit-lists", "seat-allotments", "{{seatAllotmentId}}", "decline"] } }
+        }
+      ]
+    },
+    {
+      "name": "45. Placement",
+      "item": [
+        {
+          "name": "Create Company",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/companies", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "companies"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme Corp\",\n  \"industry\": \"Software\",\n  \"website\": \"https://acme.example.com\",\n  \"contactPerson\": \"Neha Verma\",\n  \"contactEmail\": \"hr@acme.example.com\",\n  \"contactPhone\": \"9876543216\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('companyId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Companies",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/companies", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "companies"] } }
+        },
+        {
+          "name": "Create Placement Drive",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/drives", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives"] },
+            "body": { "mode": "raw", "raw": "{\n  \"companyId\": \"{{companyId}}\",\n  \"academicYearId\": \"{{academicYearId}}\",\n  \"title\": \"SDE Intern\",\n  \"description\": \"Software Development Engineer Internship\",\n  \"eligibleCourseId\": \"{{courseId}}\",\n  \"eligibilityMinCgpa\": 7.0,\n  \"ctcOffered\": 1200000,\n  \"driveDate\": \"2026-10-15\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('driveId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Drives By Academic Year",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/drives?academicYearId={{academicYearId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives"], "query": [{ "key": "academicYearId", "value": "{{academicYearId}}" }] } }
+        },
+        {
+          "name": "Get Drive By Id",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/drives/{{driveId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives", "{{driveId}}"] } }
+        },
+        {
+          "name": "Get Drive Stats",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/drives/{{driveId}}/stats", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives", "{{driveId}}", "stats"] } }
+        },
+        {
+          "name": "Apply To Drive (STUDENT role)",
+          "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/v1/placement/drives/{{driveId}}/apply", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives", "{{driveId}}", "apply"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('driveApplicationId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Applications For Drive",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/drives/{{driveId}}/applications", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "drives", "{{driveId}}", "applications"] } }
+        },
+        {
+          "name": "My Applications (STUDENT role)",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/my-applications", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "my-applications"] } }
+        },
+        {
+          "name": "Update Application Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/applications/{{driveApplicationId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "applications", "{{driveApplicationId}}", "status"] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"SHORTLISTED\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Schedule Interview Round",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/applications/{{driveApplicationId}}/interview-rounds", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "applications", "{{driveApplicationId}}", "interview-rounds"] },
+            "body": { "mode": "raw", "raw": "{\n  \"roundType\": \"TECHNICAL\",\n  \"scheduledAt\": \"2026-10-20T10:00:00Z\",\n  \"interviewerName\": \"Rakesh Gupta\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('interviewRoundId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "List Interview Rounds",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/v1/placement/applications/{{driveApplicationId}}/interview-rounds", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "applications", "{{driveApplicationId}}", "interview-rounds"] } }
+        },
+        {
+          "name": "Record Interview Result",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/interview-rounds/{{interviewRoundId}}/result", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "interview-rounds", "{{interviewRoundId}}", "result"] },
+            "body": { "mode": "raw", "raw": "{\n  \"result\": \"CLEARED\",\n  \"feedback\": \"Strong technical fundamentals\"\n}", "options": { "raw": { "language": "json" } } }
+          }
+        },
+        {
+          "name": "Make Offer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/v1/placement/applications/{{driveApplicationId}}/offer", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "applications", "{{driveApplicationId}}", "offer"] },
+            "body": { "mode": "raw", "raw": "{\n  \"ctc\": 1200000,\n  \"designation\": \"Software Development Engineer I\",\n  \"offerDate\": \"2026-10-25\",\n  \"joiningDate\": \"2027-06-01\"\n}", "options": { "raw": { "language": "json" } } }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set('offerId', pm.response.json().data.id); }"] } }]
+        },
+        {
+          "name": "Accept Offer (STUDENT role)",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/placement/offers/{{offerId}}/accept", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "offers", "{{offerId}}", "accept"] } }
+        },
+        {
+          "name": "Decline Offer (STUDENT role)",
+          "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/v1/placement/offers/{{offerId}}/decline", "host": ["{{baseUrl}}"], "path": ["api", "v1", "placement", "offers", "{{offerId}}", "decline"] } }
+        }
+      ]
+    }
+  ]
+}

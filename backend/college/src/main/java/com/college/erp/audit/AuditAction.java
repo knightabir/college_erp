@@ -1,0 +1,27 @@
+package com.college.erp.audit;
+
+/**
+ * Full coverage map from 08-system-architecture.md §14.2.
+ */
+public enum AuditAction {
+    LOGIN,
+    LOGIN_FAILED,
+    PASSWORD_CHANGED,
+    ACCOUNT_LOCKED,
+    CREATE,
+    UPDATE,
+    SOFT_DELETE,
+    FEE_COLLECTED,
+    LEDGER_ENTRY_POSTED,
+    FINANCIAL_YEAR_CLOSED,
+    PERMISSION_GRANT_CREATED,
+    PERMISSION_GRANT_REVOKED,
+    BOOK_ISSUED,
+    BOOK_RETURNED,
+    FINE_WAIVED,
+    BOOK_MARKED_LOST,
+    ASSET_TRANSFERRED,
+    ASSET_DISPOSED,
+    MARKS_SUBMITTED,
+    RESULT_PUBLISHED
+}

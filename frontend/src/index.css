@@ -1,0 +1,313 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =========================================================
+   COLLEGE MANAGEMENT SYSTEM — ACADEMIC DESIGN SYSTEM
+   Primary:   Deep Navy   #173B67
+   Action:    Blue        #2563EB
+   Secondary: Teal        #0F766E
+   ========================================================= */
+
+/* ── Custom brand / academic color scales ─────────────── */
+@theme {
+  /* Brand blue scale */
+  --color-brand-50:  #EFF6FF;
+  --color-brand-100: #DBEAFE;
+  --color-brand-200: #BFDBFE;
+  --color-brand-300: #93C5FD;
+  --color-brand-400: #60A5FA;
+  --color-brand-500: #3B82F6;
+  --color-brand-600: #2563EB;
+  --color-brand-700: #1D4ED8;
+  --color-brand-800: #1E40AF;
+  --color-brand-900: #173B67;
+  --color-brand-950: #102A4A;
+
+  /* Academic teal scale */
+  --color-academic-50:  #F0FDFA;
+  --color-academic-100: #CCFBF1;
+  --color-academic-200: #99F6E4;
+  --color-academic-300: #5EEAD4;
+  --color-academic-400: #2DD4BF;
+  --color-academic-500: #14B8A6;
+  --color-academic-600: #0D9488;
+  --color-academic-700: #0F766E;
+  --color-academic-800: #115E59;
+  --color-academic-900: #134E4A;
+
+  /* Cool neutral scale */
+  --color-neutral-50:  #F8FAFC;
+  --color-neutral-100: #F1F5F9;
+  --color-neutral-200: #E2E8F0;
+  --color-neutral-300: #CBD5E1;
+  --color-neutral-400: #94A3B8;
+  --color-neutral-500: #64748B;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1E293B;
+  --color-neutral-900: #0F172A;
+  --color-neutral-950: #020617;
+}
+
+/* ── Semantic design tokens — Light mode ──────────────── */
+:root {
+  color-scheme: light dark;
+
+  /* Core surfaces */
+  --background:         oklch(0.984 0.003 247);   /* #F8FAFC — cool off-white, reduces fatigue */
+  --foreground:         oklch(0.132 0.028 264);   /* #0F172A — deep slate */
+
+  /* Cards & popovers sit on white against the grey bg */
+  --card:               oklch(1 0 0);             /* #FFFFFF */
+  --card-foreground:    oklch(0.132 0.028 264);   /* #0F172A */
+  --popover:            oklch(1 0 0);             /* #FFFFFF */
+  --popover-foreground: oklch(0.132 0.028 264);   /* #0F172A */
+
+  /* Brand navy as the primary — buttons, active states */
+  --primary:            oklch(0.292 0.094 258);   /* #173B67 */
+  --primary-foreground: oklch(0.984 0.003 247);   /* #F8FAFC */
+
+  /* Secondary — light grey for ghost/outline button hover */
+  --secondary:          oklch(0.961 0.007 247);   /* #F1F5F9 */
+  --secondary-foreground: oklch(0.343 0.029 255); /* #334155 */
+
+  /* Muted — subtle backgrounds, disabled states */
+  --muted:              oklch(0.961 0.007 247);   /* #F1F5F9 */
+  --muted-foreground:   oklch(0.519 0.027 256);   /* #64748B */
+
+  /* Accent — brand-50 for hover/selected highlights */
+  --accent:             oklch(0.971 0.013 249);   /* #EFF6FF */
+  --accent-foreground:  oklch(0.292 0.094 258);   /* #173B67 */
+
+  /* Destructive */
+  --destructive:        oklch(0.497 0.222 27);    /* #DC2626 */
+  --destructive-foreground: oklch(1 0 0);         /* #FFFFFF */
+
+  /* Borders & inputs */
+  --border:             oklch(0.918 0.012 247);   /* #E2E8F0 */
+  --input:              oklch(0.871 0.016 251);   /* #CBD5E1 */
+
+  /* Focus ring — action blue */
+  --ring:               oklch(0.502 0.226 264);   /* #2563EB */
+
+  /* Border radius — professional, institutional */
+  --radius:             0.375rem;                  /* 6px base */
+
+  /* Charts — brand palette */
+  --chart-1:            oklch(0.502 0.226 264);   /* #2563EB */
+  --chart-2:            oklch(0.472 0.092 179);   /* #0F766E */
+  --chart-3:            oklch(0.519 0.027 256);   /* #64748B */
+  --chart-4:            oklch(0.594 0.167 74);    /* #D97706 */
+  --chart-5:            oklch(0.497 0.222 27);    /* #DC2626 */
+
+  /* Sidebar — white sidebar against grey app bg */
+  --sidebar:            oklch(1 0 0);             /* #FFFFFF */
+  --sidebar-foreground: oklch(0.132 0.028 264);   /* #0F172A */
+  --sidebar-primary:    oklch(0.292 0.094 258);   /* #173B67 */
+  --sidebar-primary-foreground: oklch(0.984 0.003 247); /* #F8FAFC */
+  --sidebar-accent:     oklch(0.971 0.013 249);   /* #EFF6FF */
+  --sidebar-accent-foreground: oklch(0.292 0.094 258); /* #173B67 */
+  --sidebar-border:     oklch(0.918 0.012 247);   /* #E2E8F0 */
+  --sidebar-ring:       oklch(0.502 0.226 264);   /* #2563EB */
+
+  /* Semantic success / warning / danger (for badges, alerts) */
+  --success:            oklch(0.425 0.127 145);   /* #15803D */
+  --success-bg:         oklch(0.988 0.024 145);   /* #F0FDF4 */
+  --warning:            oklch(0.594 0.167 74);    /* #D97706 */
+  --warning-bg:         oklch(0.998 0.018 95);    /* #FFFBEB */
+  --danger:             oklch(0.497 0.222 27);    /* #DC2626 */
+  --danger-bg:          oklch(0.994 0.015 27);    /* #FEF2F2 */
+  --info:               oklch(0.502 0.226 264);   /* #2563EB */
+  --info-bg:            oklch(0.971 0.013 249);   /* #EFF6FF */
+}
+
+/* ── Semantic design tokens — Dark mode ───────────────── */
+.dark {
+  /* Core surfaces */
+  --background:         oklch(0.117 0.023 264);   /* #0B1120 */
+  --foreground:         oklch(0.984 0.003 247);   /* #F8FAFC */
+
+  --card:               oklch(0.196 0.038 264);   /* #172033 */
+  --card-foreground:    oklch(0.984 0.003 247);   /* #F8FAFC */
+  --popover:            oklch(0.196 0.038 264);   /* #172033 */
+  --popover-foreground: oklch(0.984 0.003 247);   /* #F8FAFC */
+
+  /* Light blue as primary in dark mode for contrast */
+  --primary:            oklch(0.696 0.137 254);   /* #60A5FA */
+  --primary-foreground: oklch(0.117 0.023 264);   /* #0B1120 */
+
+  --secondary:          oklch(0.241 0.031 258);   /* #1E293B */
+  --secondary-foreground: oklch(0.871 0.016 251); /* #CBD5E1 */
+
+  --muted:              oklch(0.241 0.031 258);   /* #1E293B */
+  --muted-foreground:   oklch(0.694 0.023 253);   /* #94A3B8 */
+
+  --accent:             oklch(0.196 0.038 264);   /* #172033 */
+  --accent-foreground:  oklch(0.792 0.100 245);   /* #93C5FD */
+
+  --destructive:        oklch(0.704 0.191 22);    /* #F87171 */
+  --destructive-foreground: oklch(0.132 0.028 264); /* #0F172A */
+
+  --border:             oklch(0.342 0.029 254);   /* #334155 */
+  --input:              oklch(0.413 0.030 256);   /* #475569 */
+  --ring:               oklch(0.546 0.228 264);   /* #3B82F6 */
+
+  --chart-1:            oklch(0.696 0.137 254);   /* #60A5FA */
+  --chart-2:            oklch(0.797 0.125 174);   /* #2DD4BF */
+  --chart-3:            oklch(0.694 0.023 253);   /* #94A3B8 */
+  --chart-4:            oklch(0.817 0.163 82);    /* #FBBF24 */
+  --chart-5:            oklch(0.704 0.191 22);    /* #F87171 */
+
+  --sidebar:            oklch(0.143 0.027 264);   /* #111827 */
+  --sidebar-foreground: oklch(0.984 0.003 247);   /* #F8FAFC */
+  --sidebar-primary:    oklch(0.696 0.137 254);   /* #60A5FA */
+  --sidebar-primary-foreground: oklch(0.117 0.023 264); /* #0B1120 */
+  --sidebar-accent:     oklch(0.196 0.038 264);   /* #172033 */
+  --sidebar-accent-foreground: oklch(0.792 0.100 245); /* #93C5FD */
+  --sidebar-border:     oklch(0.241 0.031 258);   /* #1E293B */
+  --sidebar-ring:       oklch(0.546 0.228 264);   /* #3B82F6 */
+
+  --success:            oklch(0.616 0.182 145);   /* #4ADE80 */
+  --success-bg:         oklch(0.131 0.051 145);   /* #052E16 */
+  --warning:            oklch(0.817 0.163 82);    /* #FBBF24 */
+  --warning-bg:         oklch(0.148 0.059 57);    /* #451A03 */
+  --danger:             oklch(0.704 0.191 22);    /* #F87171 */
+  --danger-bg:          oklch(0.131 0.066 22);    /* #450A0A */
+  --info:               oklch(0.696 0.137 254);   /* #60A5FA */
+  --info-bg:            oklch(0.196 0.038 264);   /* #172033 */
+}
+
+/* ── Tailwind token mapping (keeps shadcn components working) ── */
+@theme inline {
+  /* Typography */
+  --font-sans:    'Inter Variable', system-ui, sans-serif;
+  --font-heading: 'Inter Variable', system-ui, sans-serif;
+  --font-mono:    ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Surface tokens */
+  --color-background:   var(--background);
+  --color-foreground:   var(--foreground);
+  --color-card:         var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover:      var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:      var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:    var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:        var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent:       var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive:  var(--destructive);
+  --color-border:       var(--border);
+  --color-input:        var(--input);
+  --color-ring:         var(--ring);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar:                    var(--sidebar);
+  --color-sidebar-foreground:         var(--sidebar-foreground);
+  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent:             var(--sidebar-accent);
+  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
+  --color-sidebar-border:             var(--sidebar-border);
+  --color-sidebar-ring:               var(--sidebar-ring);
+
+  /* Radius scale — all derived from the 6px base */
+  --radius-sm:  calc(var(--radius) * 0.667); /* ~4px */
+  --radius-md:  calc(var(--radius) * 0.833); /* ~5px */
+  --radius-lg:  var(--radius);               /* 6px  */
+  --radius-xl:  calc(var(--radius) * 1.333); /* ~8px */
+  --radius-2xl: calc(var(--radius) * 1.667); /* ~10px */
+  --radius-3xl: calc(var(--radius) * 2);     /* 12px */
+  --radius-4xl: calc(var(--radius) * 2.667); /* ~16px */
+}
+
+/* ── Global base styles ───────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    font-size: 15px;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Consistent heading hierarchy */
+  h1 { @apply text-2xl font-semibold tracking-tight; }
+  h2 { @apply text-lg font-semibold tracking-tight; }
+  h3 { @apply text-base font-semibold; }
+  h4 { @apply text-sm font-semibold; }
+
+  /* Links use action blue */
+  a {
+    color: oklch(0.502 0.226 264);
+    text-decoration-line: none;
+  }
+  a:hover {
+    text-decoration-line: underline;
+  }
+
+  /* Focus visible — strong ring for keyboard nav */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* ── Semantic badge / status utility classes ─────────── */
+@layer utilities {
+  .status-active {
+    @apply bg-[--success-bg] text-[--success] border border-[--success]/30;
+  }
+  .status-inactive {
+    @apply bg-muted text-muted-foreground border border-border;
+  }
+  .status-pending {
+    @apply bg-[--warning-bg] text-[--warning] border border-[--warning]/30;
+  }
+  .status-danger {
+    @apply bg-[--danger-bg] text-[--danger] border border-[--danger]/30;
+  }
+  .status-info {
+    @apply bg-[--info-bg] text-[--info] border border-[--info]/30;
+  }
+
+  /* Academic data density helpers */
+  .table-row-compact {
+    @apply h-12;
+  }
+  .page-padding {
+    @apply p-6;
+  }
+}

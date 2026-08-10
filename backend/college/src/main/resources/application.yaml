@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: college
+  datasource:
+    # The app's RUNTIME connection — deliberately a least-privilege, non-superuser role (created by
+    # V017__multi_tenancy_foundation.sql), NOT the same role Flyway uses below. Postgres
+    # unconditionally exempts superusers/table-owners from Row-Level Security regardless of any
+    # session variable, so multi-tenant isolation (08-system-architecture.md §5.2) only actually
+    # takes effect when the app connects as a role that is neither — see TenantAwareDataSource's
+    # javadoc and V017's header comment for the full reasoning.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/college_erp}
+    username: ${DB_USERNAME:erp_app}
+    password: ${DB_PASSWORD:ErpApp@2026}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    # Flyway's own connection — deliberately SEPARATE from spring.datasource.* above. Migrations
+    # (including V017, which needs to CREATE ROLE / GRANT) need a privileged connection; the app's
+    # everyday runtime queries must not have that privilege. Defaults match this project's existing
+    # local Postgres superuser login (see CLAUDE.md's setup notes) — override via the FLYWAY_DB_*
+    # vars for any deployment where the admin/migration credentials differ from that.
+    url: ${FLYWAY_DB_URL:jdbc:postgresql://localhost:5432/college_erp}
+    user: ${FLYWAY_DB_USERNAME:postgres}
+    password: ${FLYWAY_DB_PASSWORD:admin}
+  jpa:
+    hibernate:
+      # Schema is owned by Flyway migrations, never by Hibernate — see 07-coding-standards.md.
+      ddl-auto: none
+    open-in-view: false
+
+erp:
+  bootstrap:
+    admin:
+      # Seeds a single "default" tenant + its SUPER_ADMIN account on startup if none exists yet —
+      # air-gap/on-prem deployments only, see ErpProperties.Bootstrap's javadoc. Override every
+      # value below via env vars for any non-local deployment; never ship the default password
+      # past local/dev use. Cloud/SaaS deployments should set BOOTSTRAP_ADMIN_ENABLED=false and
+      # rely on POST /api/v1/register instead.
+      enabled: ${BOOTSTRAP_ADMIN_ENABLED:true}
+      username: ${BOOTSTRAP_ADMIN_USERNAME:superadmin}
+      email: ${BOOTSTRAP_ADMIN_EMAIL:superadmin@college.edu}
+      full-name: ${BOOTSTRAP_ADMIN_FULL_NAME:System Administrator}
+      password: ${BOOTSTRAP_ADMIN_PASSWORD:ChangeMe@123}
+    tenant:
+      # The "college details" for that single bootstrap tenant — same air-gap/on-prem-only scope.
+      name: ${BOOTSTRAP_TENANT_NAME:Default College}
+      code: ${BOOTSTRAP_TENANT_CODE:default}
+      contact-email: ${BOOTSTRAP_TENANT_CONTACT_EMAIL:admin@college.edu}

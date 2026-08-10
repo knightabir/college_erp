@@ -1,0 +1,58 @@
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# ===== Backend (Java / Maven / Spring Boot) =====
+backend/**/target/
+!backend/**/src/main/**/target/
+!backend/**/src/test/**/target/
+backend/**/.mvn/wrapper/maven-wrapper.jar
+backend/**/logs/
+backend/**/*.log
+backend/**/HELP.md
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+backend/**/build/
+!backend/**/src/main/**/build/
+!backend/**/src/test/**/build/
+
+# ===== Frontend (Node / Vite / React) =====
+frontend/**/node_modules/
+frontend/**/dist/
+frontend/**/dist-ssr/
+frontend/**/*.local
+frontend/**/npm-debug.log*
+frontend/**/yarn-debug.log*
+frontend/**/yarn-error.log*
+frontend/**/pnpm-debug.log*
+frontend/**/lerna-debug.log*
+frontend/**/logs
+
+# Local environment overrides (.env.example is the checked-in template)
+frontend/**/.env
+frontend/**/.env.*
+!frontend/**/.env.example
+
+# ===== Claude Code local settings =====
+.claude/settings.local.json
