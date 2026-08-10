@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   Breadcrumb as BreadcrumbPrimitive,
   Breadcrumbs as BreadcrumbsPrimitive,

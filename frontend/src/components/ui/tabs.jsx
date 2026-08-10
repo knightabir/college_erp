@@ -1,4 +1,3 @@
-import * as React from "react"
 import { cva } from "class-variance-authority";
 import {
   TabList as TabListPrimitive,
@@ -80,4 +79,5 @@ function TabsContent({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- tabsListVariants is a shared cva config, intentionally co-located with the Tabs components
 export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }

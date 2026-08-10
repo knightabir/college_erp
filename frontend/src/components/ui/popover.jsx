@@ -1,4 +1,3 @@
-import * as React from "react"
 import { DialogTrigger, Heading, Popover as PopoverPrimitive } from "react-aria-components";
 
 import { cn } from "@/lib/utils"

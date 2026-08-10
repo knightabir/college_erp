@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   Dialog as AlertDialogPrimitive,
   DialogTrigger as AlertDialogTriggerPrimitive,

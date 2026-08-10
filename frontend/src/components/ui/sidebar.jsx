@@ -628,6 +628,7 @@ function SidebarMenuSubButton({
   );
 }
 
+/* eslint-disable react-refresh/only-export-components -- useSidebar is a shared hook, intentionally co-located with the Sidebar components */
 export {
   Sidebar,
   SidebarContent,
@@ -654,3 +655,4 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+/* eslint-enable react-refresh/only-export-components */

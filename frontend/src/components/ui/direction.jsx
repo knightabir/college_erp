@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { I18nProvider, useLocale } from "react-aria-components"
 
 function DirectionProvider(
@@ -24,4 +23,5 @@ function useDirection() {
   return direction
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- I18nProvider/useDirection/useLocale are shared re-exports, intentionally co-located with DirectionProvider
 export { DirectionProvider, I18nProvider, useDirection, useLocale }

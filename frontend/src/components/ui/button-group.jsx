@@ -81,9 +81,11 @@ function ButtonGroupSeparator({
   );
 }
 
+/* eslint-disable react-refresh/only-export-components -- buttonGroupVariants is a shared cva config, intentionally co-located with the ButtonGroup components */
 export {
   ButtonGroup,
   ButtonGroupSeparator,
   ButtonGroupText,
   buttonGroupVariants,
 }
+/* eslint-enable react-refresh/only-export-components */

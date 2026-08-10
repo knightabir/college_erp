@@ -73,4 +73,5 @@ function LinkButton({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- buttonVariants is a shared cva config, intentionally co-located with the Button component
 export { Button, LinkButton, buttonVariants }

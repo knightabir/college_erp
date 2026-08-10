@@ -39,4 +39,5 @@ function Toggle({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- toggleVariants is a shared cva config, intentionally co-located with the Toggle component
 export { Toggle, toggleVariants }

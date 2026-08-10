@@ -1,4 +1,3 @@
-import * as React from "react"
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils"
@@ -75,4 +74,5 @@ function MarkerContent({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- markerVariants is a shared cva config, intentionally co-located with the Marker components
 export { Marker, MarkerIcon, MarkerContent, markerVariants }

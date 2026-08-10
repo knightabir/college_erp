@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   MessageScroller as MessageScrollerPrimitive,
   useMessageScroller,
@@ -111,6 +110,7 @@ function MessageScrollerButton({
   );
 }
 
+/* eslint-disable react-refresh/only-export-components -- the useMessageScroller* hooks are shared, intentionally co-located with the MessageScroller components */
 export {
   MessageScrollerProvider,
   MessageScroller,
@@ -122,3 +122,4 @@ export {
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
 }
+/* eslint-enable react-refresh/only-export-components */

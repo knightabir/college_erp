@@ -329,6 +329,7 @@ function useComboboxAnchor() {
   return React.useRef(null);
 }
 
+/* eslint-disable react-refresh/only-export-components -- useComboboxAnchor is a shared hook, intentionally co-located with the Combobox components */
 export {
   ComboBoxPrimitive as Combobox,
   ComboboxInput,
@@ -348,3 +349,4 @@ export {
   ComboboxValue,
   useComboboxAnchor,
 }
+/* eslint-enable react-refresh/only-export-components */

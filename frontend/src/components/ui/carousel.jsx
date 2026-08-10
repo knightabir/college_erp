@@ -63,8 +63,12 @@ function Carousel({
     setApi(api)
   }, [api, setApi])
 
+  // Initial onSelect(api) below syncs scroll-button state from the already-mounted Embla
+  // instance (an external imperative library), not a plain browser API like use-mobile.js's
+  // matchMedia — restructuring this risks a real carousel regression, not just a style fix.
   React.useEffect(() => {
     if (!api) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect(api)
     api.on("reInit", onSelect)
     api.on("select", onSelect)
@@ -192,4 +196,5 @@ function CarouselNext({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- useCarousel is a shared hook, intentionally co-located with the Carousel components
 export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel };
